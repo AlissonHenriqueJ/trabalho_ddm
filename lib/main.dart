@@ -1,111 +1,176 @@
 import 'package:flutter/material.dart';
+import 'package:trabalho_ddm/models/Item.dart';
+import 'package:trabalho_ddm/total.dart';
+
+//Flutter => SDK que utiliza dart.
+
+//Dart => Linguagem desenvolvida pela Google muita parecida com  JavaScript (Mais tipado que JS)
+//
+//A idéia é um só código tanto pra web quanto prá mobile (Andorid e IOS). Utiliza o conceito de wigets (inspirado no React).
+//
+//Widget => Todos os componentes no flutter são widgets (Buttonns, Containers) e esses widgets são utilizados para determinar como dever ser a visualização.
+//
+//Esistem dois tipos de widgets:
+//
+//StatefullWidget =>  Um widget mutável. ou seja  widget poderá mudar dinamicamente, a partir de uma interação do usuário.
+//
+//StatelessWidget =>  Um widget não mutável. Ele não mudará (ex. Container).
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.indigo,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: Carrinho(title: 'Carrinho de compras'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+class Carrinho extends StatefulWidget {
+  final List<Item> items = [
+    Item(nome: 'Achocolatado - 400g', valorUnitario: 5.6),
+    Item(nome: 'Açúcar - 1kg', valorUnitario: 3),
+    Item(nome: 'Arroz - 1kg', valorUnitario: 2.75),
+    Item(nome: 'Café - 500g', valorUnitario: 12),
+    Item(nome: 'Creme de Leite - 200g', valorUnitario: 2.4),
+    Item(nome: 'Feijão - 1kg', valorUnitario: 5.7),
+    Item(nome: 'Leite - 1L', valorUnitario: 2.6),
+    Item(nome: 'Macarrão - 500g', valorUnitario: 3.3),
+    Item(nome: 'Óleo de soja - 900ml', valorUnitario: 2.8),
+    Item(nome: 'Ovo - 12un', valorUnitario: 5.9),
+    Item(nome: 'Pipoca - 500g', valorUnitario: 2.8),
+    Item(nome: 'Polentina - 500g', valorUnitario: 1.7),
+    Item(nome: 'Sabão em pó - 1kg', valorUnitario: 8),
+    Item(nome: 'Sal - 1Kg', valorUnitario: 1.8),
+    Item(nome: 'Trigo - 1Kg', valorUnitario: 2.8),
+  ];
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
+  Carrinho({Key key, this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _CarrinhoState createState() => _CarrinhoState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+class _CarrinhoState extends State<Carrinho> {
+  List<Item> itemsAdicionados = List<Item>();
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
+        leading: Icon(Icons.local_grocery_store),
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
-          ],
-        ),
+      body: ListView(
+        children: widget.items
+            .map((item) => Column(children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.all(8),
+                    height: 70,
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text(
+                                '${item.nome}',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                ),
+                              ),
+                              Text(
+                                'Valor Un.: R\$ ${item.valorUnitario.toStringAsFixed(2)}',
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.grey,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            if (item.quantidade > 0) {
+                              setState(() {
+                                item.quantidade--;
+                              });
+                            }
+                            if (item.quantidade == 0) {
+                              itemsAdicionados.remove(item);
+                            }
+                          },
+                          iconSize: 28,
+                          icon: Icon(
+                            Icons.remove,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        ),
+                        Container(
+                          width: 50,
+                          child: Text(
+                            '${item.quantidade}',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        IconButton(
+                          iconSize: 28,
+                          icon: Icon(
+                            Icons.add,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                          onPressed: () {
+                            if (!itemsAdicionados.any((itemAdicionado) =>
+                                itemAdicionado.nome == item.nome)) {
+                              itemsAdicionados.add(item);
+                            }
+                            setState(() {
+                              item.quantidade++;
+                            });
+                          },
+                        )
+                      ],
+                    ),
+                  ),
+                  Divider(
+                    height: 4,
+                    color: Colors.grey[700],
+                  ),
+                ]))
+            .toList(),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Total(
+                items: itemsAdicionados,
+              ),
+            ),
+          );
+        },
+        tooltip: 'Total',
+        child: Icon(Icons.attach_money),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        shape: const CircularNotchedRectangle(),
+        child: Container(
+          height: 60.0,
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }
