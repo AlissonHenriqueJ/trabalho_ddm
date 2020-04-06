@@ -2,20 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:trabalho_ddm/models/Item.dart';
 import 'package:trabalho_ddm/total.dart';
 
-//Flutter => SDK que utiliza dart.
-
-//Dart => Linguagem desenvolvida pela Google muita parecida com  JavaScript (Mais tipado que JS)
-//
-//A idéia é um só código tanto pra web quanto prá mobile (Andorid e IOS). Utiliza o conceito de wigets (inspirado no React).
-//
-//Widget => Todos os componentes no flutter são widgets (Buttonns, Containers) e esses widgets são utilizados para determinar como dever ser a visualização.
-//
-//Esistem dois tipos de widgets:
-//
-//StatefullWidget =>  Um widget mutável. ou seja  widget poderá mudar dinamicamente, a partir de uma interação do usuário.
-//
-//StatelessWidget =>  Um widget não mutável. Ele não mudará (ex. Container).
-
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
